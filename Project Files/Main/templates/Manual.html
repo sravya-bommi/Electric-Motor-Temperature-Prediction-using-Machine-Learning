@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual Temperature Prediction</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #1f4037, #99f2c8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    width: 95%;
+    max-width: 900px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 30px;
+    padding: 15px;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    background: #1f4037;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e0ffe0;
+    border-radius: 10px;
+    text-align: center;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h1>🔥 Manual Temperature Prediction</h1>
+
+<form id="predictionForm">
+<div class="grid">
+<input type="number" step="any" placeholder="Ambient Temp" required>
+<input type="number" step="any" placeholder="Coolant Temp" required>
+<input type="number" step="any" placeholder="U_d Voltage" required>
+<input type="number" step="any" placeholder="U_q Voltage" required>
+<input type="number" step="any" placeholder="Motor Speed" required>
+<input type="number" step="any" placeholder="Torque" required>
+<input type="number" step="any" placeholder="I_d Current" required>
+<input type="number" step="any" placeholder="I_q Current" required>
+<input type="number" step="any" placeholder="PM Temp" required>
+<input type="number" step="any" placeholder="Stator Yoke Temp" required>
+<input type="number" step="any" placeholder="Stator Tooth Temp" required>
+<input type="number" step="any" placeholder="Stator Winding Temp" required>
+</div>
+
+<button type="submit">Predict Temperature</button>
+</form>
+
+<div id="resultBox" class="result" style="display:none;"></div>
+</div>
+
+<script>
+document.getElementById("predictionForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    const inputs = document.querySelectorAll("input");
+    const features = Array.from(inputs).map(i => parseFloat(i.value));
+
+    const response = await fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({features})
+    });
+
+    const data = await response.json();
+    const resultBox = document.getElementById("resultBox");
+    resultBox.style.display = "block";
+    resultBox.innerHTML = "Predicted Motor Temperature: <b>" + data.prediction.toFixed(2) + " °C</b>";
+});
+</script>
+
+</body>
+</html>

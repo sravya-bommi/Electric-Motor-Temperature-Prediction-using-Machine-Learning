@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Motor Sensor Prediction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background: #ffffff;
+            width: 95%;
+            max-width: 900px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: #1e3c72;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-group input {
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        .input-group input:focus {
+            border-color: #2a5298;
+            box-shadow: 0 0 5px rgba(42,82,152,0.3);
+            outline: none;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 14px 40px;
+            background: #2a5298;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        button:hover {
+            background: #1e3c72;
+            transform: translateY(-2px);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #e8f0ff;
+            border-left: 5px solid #2a5298;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            color: #1e3c72;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>⚡ Motor Sensor Temperature Predictor</h1>
+
+    <form method="post" action="/predict_sensor">
+        <div class="grid">
+
+            <div class="input-group">
+                <label>Ambient Temperature (°C)</label>
+                <input type="number" step="any" name="ambient" required>
+            </div>
+
+            <div class="input-group">
+                <label>Torque (Nm)</label>
+                <input type="number" step="any" name="torque" required>
+            </div>
+
+            <div class="input-group">
+                <label>Coolant Temperature (°C)</label>
+                <input type="number" step="any" name="coolant" required>
+            </div>
+
+            <div class="input-group">
+                <label>Voltage U_d (V)</label>
+                <input type="number" step="any" name="u_d" required>
+            </div>
+
+            <div class="input-group">
+                <label>Voltage U_q (V)</label>
+                <input type="number" step="any" name="u_q" required>
+            </div>
+
+            <div class="input-group">
+                <label>Motor Speed (RPM)</label>
+                <input type="number" step="any" name="motor_speed" required>
+            </div>
+
+            <div class="input-group">
+                <label>Current I_d</label>
+                <input type="number" step="any" name="i_d" required>
+            </div>
+
+            <div class="input-group">
+                <label>Current I_q</label>
+                <input type="number" step="any" name="i_q" required>
+            </div>
+
+        </div>
+
+        <div class="btn-container">
+            <button type="submit">Predict Temperature</button>
+        </div>
+    </form>
+
+    {% if prediction is not none %}
+    <div class="result-box">
+        Predicted Motor Temperature: {{ prediction }}
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>

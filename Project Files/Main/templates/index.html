@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Motor Temperature AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #141e30, #243b55);
+    color: white;
+}
+
+.container {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+p {
+    opacity: 0.85;
+    margin-bottom: 50px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 300px;
+    transition: 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.manual-btn {
+    background: #00c6ff;
+    color: black;
+}
+
+.sensor-btn {
+    background: #00ff95;
+    color: black;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>⚡ Electric Motor Temperature AI</h1>
+    <p>Predict motor temperature using machine learning models.</p>
+
+    <div class="cards">
+        <div class="card">
+            <h2>Manual Prediction</h2>
+            <p>Enter custom feature values to estimate motor temperature.</p>
+            <a href="/Manual"><button class="manual-btn">Start Manual Prediction</button></a>
+        </div>
+
+        <div class="card">
+            <h2>Sensor Prediction</h2>
+            <p>Upload real sensor parameters for temperature prediction.</p>
+            <a href="/sensor"><button class="sensor-btn">Start Sensor Prediction</button></a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
